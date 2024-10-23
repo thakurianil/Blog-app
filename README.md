@@ -33,8 +33,4 @@ A responsive blog platform built with **React** and **React Bootstrap**, where u
 
 ## Installation
 
-1. **Clone the repository:**
 
-   ```bash
-   git clone https://github.com/ashon-shakya/blog-post.git
-   ```
