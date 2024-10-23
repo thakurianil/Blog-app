@@ -30,7 +30,3 @@ A responsive blog platform built with **React** and **React Bootstrap**, where u
   - JWT (for authentication)
   - bcrypt (for password hashing)
 - **MongoDB (Optional)**: For database (if you’re using a full-stack approach with a database).
-
-## Installation
-
-
