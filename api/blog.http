@@ -1,0 +1,68 @@
+@api_url = http://localhost:9000/api/v1
+
+###
+# fetch user by id
+# @prompt bearer_token
+GET {{api_url}}/user/profile
+Authorization: Bearer {{bearer_token}}
+
+
+###
+# Signup user
+POST {{api_url}}/auth/signup
+Content-Type: application/json
+
+{
+  "username":"user1",
+  "email" : "test@email.com",
+  "password": "password"
+}
+
+###
+
+# login
+POST {{api_url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@email.com",
+  "password" : "password"
+}
+
+###
+
+# Get All Post
+GET {{api_url}}/post
+
+###
+
+# Create Post
+# @prompt bearer_token
+POST {{api_url}}/post
+Authorization: Bearer {{bearer_token}}
+Content-Type: application/json
+
+{
+  "title": "Post 1",
+  "content": "Content of POST"
+}
+
+###
+# Get Post Detail
+# @prompt id
+GET {{api_url}}/post/{{id}}
+
+
+###
+# Delete Post
+# @prompt bearer_token
+@post_id = 670e474d2121144d3b15ef17
+DELETE {{api_url}}/post/{{post_id}}
+Authorization: Bearer {{bearer_token}}
+
+
+###
+# @prompt bearer_token
+GET {{api_url}}/user/post
+Authorization: Bearer {{bearer_token}}
+
