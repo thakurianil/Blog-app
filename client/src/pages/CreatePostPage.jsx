@@ -1,17 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import Header from "../components/Navbar";
-import Footer from "../components/footer";
+import Footer from "../components/Footer";
+import { createPost } from "../utils/axiosHelper";
 
 const CreatePostPage = () => {
-  const post = {
-    id: "id",
-    title: "Post Title",
-    content:
-      "Some quick example text to build on the card title and make up the bulk of the card's content.",
-    author: "John Doe",
-    own: true,
-  };
+
+
+  const  initialState = {
+    id: "",
+    title: "",
+    content: "",
+    author: "",
+    own:true,
+  }
+  const [formData , setFormData] = useState(initialState);
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value, 
+    });
+    
+  }
+
+  const handleOnSubmit = async(e) =>{
+    e.preventDefault();
+    const response = await createPost(formData);
+    console.log("Form Data:", formData);
+
+  }
+
+
   return (
     <>
       <Header />
@@ -24,14 +45,15 @@ const CreatePostPage = () => {
           <Col md={{ span: 8, offset: 2 }}>
             <h1>Create Post</h1>
             <hr />
-            <Form>
+            <Form onSubmit={handleOnSubmit}>
               <Form.Group controlId="formTitle">
                 <Form.Label>Title</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter post title"
+                  placeholder="Enter post title" 
                   required
                   name="title"
+                  onChange={handleOnChange}
                 />
               </Form.Group>
 
@@ -43,6 +65,8 @@ const CreatePostPage = () => {
                   placeholder="Enter post content"
                   required
                   name="content"
+                  onChange={handleOnChange}
+
                 />
               </Form.Group>
 
@@ -52,6 +76,8 @@ const CreatePostPage = () => {
                   type="text"
                   placeholder="Enter image URL"
                   name="image"
+                  onChange={handleOnChange}
+
                 />
               </Form.Group>
 

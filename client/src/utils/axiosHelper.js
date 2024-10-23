@@ -43,3 +43,42 @@ export const fetchPost = async (postId) => {
   };
   return await apiProcessor(obj);
 };
+
+
+export const fetchUser = async () => {
+  const obj = {
+    method: "get",
+    url: `${userEP}`,
+    headers:{
+      jwtToken: localStorage.getItem("jwtToken")
+    }
+  };
+  return await apiProcessor(obj);
+};
+
+
+export const createPost = async (data) => {
+  let token = localStorage.getItem("jwtToken");
+  const obj = {
+    method: "post",
+    url: `${postEP}`,
+    data: data,
+    headers:
+    {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  return await apiProcessor(obj);
+}
+
+export const fetchUserPost = async () => {
+  let token = localStorage.getItem("jwtToken");
+  const obj = {
+    method: "get",
+    url: `${userEP}/post`,
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  };
+  return await apiProcessor(obj);
+};

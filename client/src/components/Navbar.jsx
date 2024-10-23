@@ -1,6 +1,8 @@
 import { Container, Form, Nav, Navbar, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useAuth } from "../utils/AuthContext";
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -9,6 +11,7 @@ const Header = () => {
     <>
       <Navbar className="bg-body-tertiary">
         <Container>
+          <ToastContainer/>
           <Navbar.Brand href="/">
             <img
               alt=""

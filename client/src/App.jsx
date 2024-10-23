@@ -9,8 +9,25 @@ import PostPage from "./pages/PostPage";
 import MyPostPage from "./pages/MyPostPage";
 import CreatePostPage from "./pages/CreatePostPage";
 import { Auth } from "./auth/Auth";
+import { useEffect, useState } from "react";
+import { useAuth } from "./utils/AuthContext";
+import {AutoLogin} from "./auth/AutoLogin.jsx";
 
 function App() {
+  const { user, setUser } = useAuth();
+
+  useEffect(()=>{
+    UpdateUser();
+
+
+  })
+
+  const UpdateUser = async() => {
+    const user =  await AutoLogin();
+    setUser(user);
+  };
+
+
   return (
     <>
       <Routes>
