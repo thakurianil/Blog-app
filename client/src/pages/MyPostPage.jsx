@@ -39,12 +39,9 @@ const MyPostPage = () => {
           <Col className="text-center">
             <div className="d-flex gap-4 flex-wrap justify-content-center align-items-center">
               {userPost.map((post) => (
-                <PostCard key={post._id} post={post} />
+                <PostCard key={post._id} post={post}  />
               ))}
-              {/* {userPost.map((post) => (
-                <PostCard key={post?._id} post={post} />
-              ))} */}
-
+              
               {/* <PostCard post={post} />
               <PostCard post={post} />
               <PostCard post={post} />
