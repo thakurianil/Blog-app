@@ -73,4 +73,3 @@ const PostPage = () => {
 };
 
 export default PostPage;
-//need some work to do
