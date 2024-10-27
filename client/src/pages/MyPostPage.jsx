@@ -61,4 +61,3 @@ const MyPostPage = () => {
 };
 
 export default MyPostPage;
-//write
