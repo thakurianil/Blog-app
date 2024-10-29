@@ -27,6 +27,7 @@ app.get("/", (request, response) => {
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/post", postRouter);
+//work
 
 app.listen(PORT, (error) => {
   error
