@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { createUser, findUser } from "../models/userSchema.js";
 import { config } from "../config/config.js";
+import { authenticateJWT } from "../middleware/authenticate.js";
+import { consoleMiddleWare } from "../middleware/consoleMiddleWare.js";
 
 const router = express.Router();
 
@@ -41,7 +43,7 @@ router.post("/signup", async (req, res) => {
 });
 
 // login
-router.post("/login", async (req, res) => {
+router.post("/login", consoleMiddleWare, async (req, res) => {
   const { email, password } = req.body;
 
   const user = await findUser({ email }, true);
@@ -74,7 +76,7 @@ router.post("/login", async (req, res) => {
   } else {
     // login successful
     const token = jwt.sign(
-      { _id: user._id, email: user.email },
+      { _id: user._id, email: user.email, username: user.username },
       config.jwtSecret,
       {
         expiresIn: config.jwtExpire,
@@ -92,6 +94,16 @@ router.post("/login", async (req, res) => {
 
     res.status(200).send(respObj);
   }
+});
+
+router.get("/verify", consoleMiddleWare, authenticateJWT, async (req, res) => {
+  const respObj = {
+    status: "success",
+    message: "Verified",
+    data: { username: req.user.username },
+  };
+
+  return res.status(200).send(respObj);
 });
 
 export default router;

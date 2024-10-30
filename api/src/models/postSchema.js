@@ -18,6 +18,17 @@ const postSchema = new mongoose.Schema({
     ref: "user",
     required: true,
   },
+  likes: [{ type: String }],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  comments: [{ type: Object, required: true }],
+  userid:  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -27,19 +38,11 @@ const postSchema = new mongoose.Schema({
 export const Post = mongoose.model("post", postSchema);
 
 export const getPosts = async () => {
-  return await Post.find().populate({
-    path: "author",
-    select: "-_id",
-  });
+  return await Post.find().populate("author");
 };
 
 export const getPostById = async (id) => {
-  return await Post.findById(id)
-    .populate({
-      path: "author",
-      select: "-_id",
-    })
-    .exec();
+  return await Post.findById(id).populate("author");
 };
 
 export const createPost = async (post) => {
@@ -70,3 +73,5 @@ export const searchPost = async (query, projection) => {
   });
   return data;
 };
+
+

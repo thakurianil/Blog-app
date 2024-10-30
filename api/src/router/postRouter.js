@@ -4,6 +4,8 @@ import {
   deletePost,
   getPostById,
   getPosts,
+  searchPost,
+  updatePost,
 } from "../models/postSchema.js";
 import { authenticateJWT } from "../middleware/authenticate.js";
 
@@ -140,6 +142,7 @@ router.delete("/:id", authenticateJWT, async (req, res) => {
 
     return res.status(200).send(respObj);
   } catch (err) {
+    console.log(err);
     const errObj = {
       status: "error",
       message: "Error Deleting",
@@ -150,6 +153,132 @@ router.delete("/:id", authenticateJWT, async (req, res) => {
     };
 
     return res.status(500).send(errObj);
+  }
+});
+
+router.get("/search/:query", async (req, res) => {
+  //query call
+  const { query } = req.params;
+  const postData = await searchPost({
+    title: { $regex: new RegExp(query, "i") },
+  });
+
+  const respObj = {
+    status: "success",
+    message: "post found",
+    data: postData,
+  };
+
+  return res.send(respObj);
+});
+
+router.patch("/:id", authenticateJWT, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const postData = req.body;
+    const updatedData = await updatePost(id, postData);
+    const respObj = {
+      status: "success",
+      message: "Post updated successfully",
+    };
+
+    return res.status(200).send(respObj);
+  } catch (err) {
+    console.log(err);
+    const errObj = {
+      status: "error",
+      message: "Error updating",
+      error: {
+        code: 500,
+        details: err.message || "Error updating post",
+      },
+    };
+
+    return res.status(errObj.error.code).send(errObj);
+  }
+});
+
+router.patch("/like/:id", authenticateJWT, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const postData = await getPostById(id);
+
+    let likedList = postData.likes;
+
+    if (likedList.includes(req.user._id)) {
+      likedList = likedList.filter((item) => item != req.user._id);
+    } else {
+      likedList.push(req.user._id);
+    }
+
+    const updatedData = await updatePost(id, { likes: likedList });
+
+    console.log(updatedData);
+
+    const respObj = {
+      status: "success",
+      message: "Post liked",
+    };
+
+    return res.status(200).send(respObj);
+  } catch (err) {
+    const errObj = {
+      status: "error",
+      message: "Erro liking post!",
+      error: {
+        code: 500,
+        message: err.message || "Error liking post",
+      },
+    };
+    return res.status(errObj.error.code).send(errObj);
+  }
+});
+
+router.post("/comment/:id", authenticateJWT, async (req, res) => {
+  const { id } = req.params;
+  const {comment} = req.body;
+
+console.log(req.body);
+
+  try {
+    const postData = await getPostById(id);
+
+    let commentList = postData.comments;
+
+    console.log(commentList)
+
+    let newCOmmentObject = {
+      comment: comment,
+      userid : req.user._id,
+    };
+
+    console.log(newCOmmentObject);
+    
+    commentList.push(newCOmmentObject);
+
+
+    const updatedData = await updatePost(id, { 
+      comments : commentList
+    });
+
+
+    const respObj = {
+      status: "success",
+      message: "Post commented",
+    };
+
+    return res.status(200).send(respObj);
+  } catch (err) {
+    const errObj = {
+      status: "error",
+      message: "Erro liking post!",
+      error: {
+        code: 500,
+        message: err.message || "Error liking post",
+      },
+    };
+    return res.status(errObj.error.code).send(errObj);
   }
 });
 
