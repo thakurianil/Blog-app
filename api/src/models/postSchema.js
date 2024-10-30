@@ -42,7 +42,7 @@ export const getPosts = async () => {
 };
 
 export const getPostById = async (id) => {
-  return await Post.findById(id).populate("author");
+  return await Post.findById(id).populate("author userid");
 };
 
 export const createPost = async (post) => {
