@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Header from "../components/Navbar";
 import PostCard from "../components/PostCard";
-import Footer from "../components/footer";
+import Footer from "../components/Footer";
 import { FloatingButton } from "../components/FloatingButton";
 import { Link } from "react-router-dom";
 import { deletePost, fetchMyPost } from "../utils/axiosHelper";

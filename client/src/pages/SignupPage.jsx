@@ -31,14 +31,16 @@ const SignupPage = () => {
     });
   };
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
 
     console.log(formData);
 
     if (formData.password === formData.comfirmPassword) {
+      await signup(formData);
       // signup axios call
       toast.success("SIGNUP SUCCESS");
+      
     } else {
       toast.error("PASSWORD MISMATCH!!");
     }
