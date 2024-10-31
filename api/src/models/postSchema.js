@@ -19,16 +19,17 @@ const postSchema = new mongoose.Schema({
     required: true,
   },
   likes: [{ type: String }],
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  comments: [{ type: Object, required: true }],
-  userid:  {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
-    required: true,
-  },
+  comments: [
+    {
+      comment: { type: String, required: true },
+      userid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+        required: true,
+      },
+      commentedAt: { type: Date, default: Date.now },
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,
@@ -37,12 +38,12 @@ const postSchema = new mongoose.Schema({
 
 export const Post = mongoose.model("post", postSchema);
 
-export const getPosts = async () => {
-  return await Post.find().populate("author");
+export const getPosts = async (page, limit) => {
+  return await Post.find().populate("author").limit(limit);
 };
 
 export const getPostById = async (id) => {
-  return await Post.findById(id).populate("author userid");
+  return await Post.findById(id).populate("author comments.userid");
 };
 
 export const createPost = async (post) => {
@@ -50,11 +51,11 @@ export const createPost = async (post) => {
   return await newPost.save();
 };
 
-export const updatePost = async (id, post) => {
+export const updatePost = async (id, updateData) => {
   const data = await Post.findByIdAndUpdate(
     id,
     {
-      $set: post,
+      $set: updateData,
     },
     { new: true }
   );
@@ -73,5 +74,3 @@ export const searchPost = async (query, projection) => {
   });
   return data;
 };
-
-

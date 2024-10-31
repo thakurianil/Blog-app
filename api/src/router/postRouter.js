@@ -14,7 +14,9 @@ const router = express.Router();
 // get all posts
 router.get("/", async (req, res) => {
   try {
-    let data = await getPosts();
+    let page = req.params.page || 1;
+    let limit = req.params.limit || 10;
+    let data = await getPosts(page, limit);
 
     let postData = [...data];
 
@@ -163,6 +165,13 @@ router.get("/search/:query", async (req, res) => {
     title: { $regex: new RegExp(query, "i") },
   });
 
+  // const postData = await searchPost({
+  //   $or: [
+  //     { title: { $regex: new RegExp(query, "i") } },
+  //     { content: { $regex: new RegExp(query, "i") } },
+  //   ],
+  // });
+
   const respObj = {
     status: "success",
     message: "post found",
@@ -236,46 +245,42 @@ router.patch("/like/:id", authenticateJWT, async (req, res) => {
 });
 
 router.post("/comment/:id", authenticateJWT, async (req, res) => {
+  // receive from url
   const { id } = req.params;
-  const {comment} = req.body;
-
-console.log(req.body);
+  // receive from comment form data
+  const { comment } = req.body;
 
   try {
+    // retrieve old comments from database
     const postData = await getPostById(id);
 
+    // old comment list
     let commentList = postData.comments;
 
-    console.log(commentList)
-
-    let newCOmmentObject = {
+    // new comment
+    let newCommentObject = {
       comment: comment,
-      userid : req.user._id,
+      userid: req.user._id,
     };
 
-    console.log(newCOmmentObject);
-    
-    commentList.push(newCOmmentObject);
+    // add new comment to old comment list
+    commentList.push(newCommentObject);
 
-
-    const updatedData = await updatePost(id, { 
-      comments : commentList
-    });
-
+    const updatedData = await updatePost(id, { comments: commentList });
 
     const respObj = {
       status: "success",
-      message: "Post commented",
+      message: "Successfully Commented",
     };
 
     return res.status(200).send(respObj);
   } catch (err) {
     const errObj = {
       status: "error",
-      message: "Erro liking post!",
+      message: "Erro commenting in the post!",
       error: {
         code: 500,
-        message: err.message || "Error liking post",
+        message: err.message || "Error commenting in the post",
       },
     };
     return res.status(errObj.error.code).send(errObj);

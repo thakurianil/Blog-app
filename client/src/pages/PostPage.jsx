@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { Col, Container, Row, Image } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { fetchPost } from "../utils/axiosHelper";
+import { CommentComponent } from "../components/commentComponent";
 
 const PostPage = () => {
   // Sample data for the article
@@ -63,6 +64,14 @@ const PostPage = () => {
                 <small>{post.date}</small>
               </p>
             </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={{ span: 8, offset: 2 }}>
+            <CommentComponent
+              postid={post._id}
+              comments={post.comments ?? []}
+            />
           </Col>
         </Row>
       </Container>

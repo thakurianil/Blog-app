@@ -1,10 +1,19 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrash,
+  faPenToSquare,
+  faHeart,
+} from "@fortawesome/free-solid-svg-icons";
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, likeFunction, deleteFunction }) => {
+  const navigate = useNavigate();
+  const updateFunction = (id) => {
+    navigate("/mypost/update?id=" + id);
+  };
+
   return (
     <>
       <Card className="post">
@@ -22,18 +31,37 @@ const PostCard = ({ post }) => {
             >
               {post.title}
             </Link>
-
-            {post.owner ? (
+            <div>
               <FontAwesomeIcon
-                icon={faTrash}
+                icon={faHeart}
                 size="sm"
-                style={{ cursor: "pointer", color: "black" }}
-                title="Delete Article"
-                onClick={() => alert("Delete this article?")} // Example action
+                style={{ cursor: "pointer", color: "red" }}
+                title="Like Article"
+                onClick={() => likeFunction(post._id)} // Example action
               />
-            ) : (
-              ""
-            )}
+              {post.likes.length}
+
+              {post.owner ? (
+                <>
+                  <FontAwesomeIcon
+                    icon={faPenToSquare}
+                    size="sm"
+                    style={{ cursor: "pointer", color: "black" }}
+                    title="Update Article"
+                    onClick={() => updateFunction(post._id)} // Example action
+                  />
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    size="sm"
+                    style={{ cursor: "pointer", color: "black" }}
+                    title="Delete Article"
+                    onClick={() => deleteFunction(post._id)} // Example action
+                  />
+                </>
+              ) : (
+                ""
+              )}
+            </div>
           </Card.Title>
           <hr />
           <Card.Text>{post.content.slice(0, 100)}...</Card.Text>

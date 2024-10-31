@@ -6,25 +6,51 @@ import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../utils/AuthContext";
+import { CustomInputField } from "../components/CustomInputField";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate(); // Initialize the useNavigate hook
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleOnChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
 
-    await login({
-      email,
-      password,
-    });
+    await login(formData);
 
     navigate("/");
   };
 
-  
+  const inputFields = [
+    {
+      type: "email",
+      name: "email",
+      labelName: "Enter Emaill",
+      placeholder: "Enter Email address",
+      value: formData.email,
+      onChange: handleOnChange,
+    },
+
+    {
+      type: "password",
+      name: "password",
+      labelName: "Password",
+      placeholder: "Enter Password",
+      value: formData.password,
+      onChange: handleOnChange,
+    },
+  ];
 
   return (
     <>
@@ -49,25 +75,9 @@ const LoginPage = () => {
                 </Link>
               </Form.Group>
               <hr />
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </Form.Group>
+              {inputFields.map((field, index) => {
+                return <CustomInputField key={index} {...field} />;
+              })}
 
               <Button variant="success" type="submit">
                 Login

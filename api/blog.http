@@ -84,6 +84,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3MGNjN
 GET {{api_url}}/post/search/zoo
 
 ###
-# @prompt id
-GET {{api_url}}/comment/{{id}}
-
+PATCH {{api_url}}/post/like/67170ed9119982519a3884c4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3MGNjNDExOTk4MjUxOWEzODg0OWMiLCJlbWFpbCI6ImphbmVAZ21haWwuY29tIiwidXNlcm5hbWUiOiJKYW5lIERvZSIsImlhdCI6MTcyOTczNzAwMSwiZXhwIjoxNzI5ODIzNDAxfQ.vIUxUuYyhRgGE5ycY-vyKws_qZ4I4RNYCfq55NVpAwI

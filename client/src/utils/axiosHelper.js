@@ -44,41 +44,109 @@ export const fetchPost = async (postId) => {
   return await apiProcessor(obj);
 };
 
+export const fetchMyPost = async () => {
+  let token = localStorage.getItem("jwtToken");
 
-export const fetchUser = async () => {
   const obj = {
     method: "get",
-    url: `${userEP}`,
-    headers:{
-      jwtToken: localStorage.getItem("jwtToken")
-    }
+    url: userEP + "/post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   };
+
   return await apiProcessor(obj);
 };
 
-
-export const createPost = async (data) => {
+export const createPost = async (postData) => {
   let token = localStorage.getItem("jwtToken");
   const obj = {
     method: "post",
-    url: `${postEP}`,
-    data: data,
-    headers:
-    {
-      Authorization: `Bearer ${token}`
-    }
-  }
-  return await apiProcessor(obj);
-}
+    url: postEP,
+    data: postData,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
-export const fetchUserPost = async () => {
+  return await apiProcessor(obj);
+};
+
+export const updatePost = async (id, postData) => {
   let token = localStorage.getItem("jwtToken");
   const obj = {
-    method: "get",
-    url: `${userEP}/post`,
-    headers:{
-      Authorization: `Bearer ${token}`
-    }
+    method: "patch",
+    url: postEP + "/" + id,
+    data: postData,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   };
+
+  return await apiProcessor(obj);
+};
+
+export const likePost = async (id) => {
+  let token = localStorage.getItem("jwtToken");
+  const obj = {
+    method: "patch",
+    url: postEP + "/like/" + id,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  return await apiProcessor(obj);
+};
+
+export const deletePost = async (id) => {
+  const token = localStorage.getItem("jwtToken");
+
+  const obj = {
+    method: "delete",
+    url: postEP + "/" + id,
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+
+  return await apiProcessor(obj);
+};
+
+export const verifyToken = async () => {
+  const token = localStorage.getItem("jwtToken");
+
+  const obj = {
+    method: "get",
+    url: authEP + "/verify",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+
+  return await apiProcessor(obj);
+};
+
+export const fetchSearchPost = async (query) => {
+  const obj = {
+    method: "get",
+    url: postEP + "/search/" + query,
+  };
+
+  return await apiProcessor(obj);
+};
+
+export const postComment = async (id, commentObj) => {
+  const token = localStorage.getItem("jwtToken");
+
+  const obj = {
+    method: "post",
+    url: postEP + "/comment/" + id,
+    data: commentObj,
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+
   return await apiProcessor(obj);
 };

@@ -1,17 +1,31 @@
 import { Container, Form, Nav, Navbar, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthContext";
-import { ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
 
-const Header = () => {
+const Header = ({ searchPosts }) => {
   const { user, logout } = useAuth();
+  const [searchValue, setSearchValue] = useState("");
+  const navigate = useNavigate();
+
+  const handleOnChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const handleOnSubmit = (e) => {
+    // console.log("SEARCH");
+    e.preventDefault();
+    // searchPosts(searchValue);
+
+    navigate("/search?query=" + searchValue);
+  };
 
   return (
     <>
       <Navbar className="bg-body-tertiary">
         <Container>
-          <ToastContainer/>
           <Navbar.Brand href="/">
             <img
               alt=""
@@ -38,14 +52,16 @@ const Header = () => {
             </Nav>
           </Navbar.Collapse>
 
-          <Form className="d-flex g-2">
+          <Form className="d-flex g-2" onSubmit={handleOnSubmit}>
             <Form.Control
               type="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              value={searchValue}
+              onChange={handleOnChange}
             />
-            <Button className="me-2" variant="outline-success">
+            <Button className="me-2" variant="outline-success" type="submit">
               Search
             </Button>
             {user ? (

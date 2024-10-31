@@ -9,24 +9,24 @@ import PostPage from "./pages/PostPage";
 import MyPostPage from "./pages/MyPostPage";
 import CreatePostPage from "./pages/CreatePostPage";
 import { Auth } from "./auth/Auth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAuth } from "./utils/AuthContext";
-import {AutoLogin} from "./auth/AutoLogin.jsx";
+import SearchPage from "./pages/SearchPostPage";
+import { toast, ToastContainer } from "react-toastify";
 
 function App() {
-  const { user, setUser } = useAuth();
+  const { autoLogin, globalMessage, setGlobalMessage } = useAuth();
 
-  useEffect(()=>{
-    UpdateUser();
+  useEffect(() => {
+    autoLogin();
+  }, []);
 
-
-  })
-
-  const UpdateUser = async() => {
-    const user =  await AutoLogin();
-    setUser(user);
-  };
-
+  useEffect(() => {
+    if (globalMessage) {
+      toast(globalMessage);
+      setGlobalMessage(null);
+    }
+  }, [globalMessage]);
 
   return (
     <>
@@ -34,15 +34,14 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-
         <Route path="/article" element={<PostPage />} />
+        <Route path="/search" element={<SearchPage />} />
 
         <Route
           path="/mypost"
           element={
             <Auth>
-              {" "}
-              <MyPostPage />{" "}
+              <MyPostPage />
             </Auth>
           }
         />
@@ -50,11 +49,21 @@ function App() {
           path="/mypost/create"
           element={
             <Auth>
-              <CreatePostPage />{" "}
+              <CreatePostPage />
+            </Auth>
+          }
+        />
+
+        <Route
+          path="/mypost/update"
+          element={
+            <Auth>
+              <CreatePostPage />
             </Auth>
           }
         />
       </Routes>
+      <ToastContainer />
     </>
   );
 }
