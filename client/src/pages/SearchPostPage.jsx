@@ -30,8 +30,6 @@ const SearchPage = () => {
 
   return (
     <>
-      <Header searchPosts={searchPosts} />
-
       <Container
         fluid
         className="d-flex justify-content-center align-items-center"
@@ -39,7 +37,7 @@ const SearchPage = () => {
       >
         <Row className="mt-4">
           <Col className="text-center">
-            <h1> Searching....</h1>
+            <h1> Searching Results: Found {posts.length} results </h1>
             <hr />
             <div className="d-flex gap-4 flex-wrap justify-content-center align-items-center">
               {posts.map((post) => (
@@ -49,7 +47,6 @@ const SearchPage = () => {
           </Col>
         </Row>
       </Container>
-      <Footer />
     </>
   );
 };

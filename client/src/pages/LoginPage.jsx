@@ -7,22 +7,45 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../utils/AuthContext";
 import { CustomInputField } from "../components/CustomInputField";
+import { useForm } from "../hooks/useForm";
 
 const LoginPage = () => {
   const { login } = useAuth();
   const navigate = useNavigate(); // Initialize the useNavigate hook
 
-  const [formData, setFormData] = useState({
+  // use custom hooks
+  const { formData, handleOnChange } = useForm({
     email: "",
     password: "",
   });
 
-  const handleOnChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // const customData = useForm({});
+
+  // const formData =  customData[0];
+  // const setFormData = customData[1];
+  // const handleOnChange = customData[2];
+
+  // const [formData, setFormData, handleOnChange] = useForm({
+
+  // });
+
+  // const temp = useState(1000);
+  // const data = temp[0];
+  // const setData = temp[1];
+
+  // const [data, setData] = useState(1000);
+
+  // const [formData, setFormData] = useState({
+  //   email: "",
+  //   password: "",
+  // });
+
+  // const handleOnChange = (e) => {
+  //   setFormData({
+  //     ...formData,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();

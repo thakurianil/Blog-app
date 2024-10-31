@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { useAuth } from "./utils/AuthContext";
 import SearchPage from "./pages/SearchPostPage";
 import { toast, ToastContainer } from "react-toastify";
+import DefaultLayout from "./components/layout/DefaultLayout";
 
 function App() {
   const { autoLogin, globalMessage, setGlobalMessage } = useAuth();
@@ -31,37 +32,40 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/article" element={<PostPage />} />
-        <Route path="/search" element={<SearchPage />} />
+        {/* public page */}
+        <Route path="*" element={<DefaultLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="signup" element={<SignupPage />} />
+          <Route path="article" element={<PostPage />} />
+          <Route path="search" element={<SearchPage />} />
+          {/* private page */}
+          <Route
+            path="mypost"
+            element={
+              <Auth>
+                <MyPostPage />
+              </Auth>
+            }
+          />
+          <Route
+            path="mypost/create"
+            element={
+              <Auth>
+                <CreatePostPage />
+              </Auth>
+            }
+          />
 
-        <Route
-          path="/mypost"
-          element={
-            <Auth>
-              <MyPostPage />
-            </Auth>
-          }
-        />
-        <Route
-          path="/mypost/create"
-          element={
-            <Auth>
-              <CreatePostPage />
-            </Auth>
-          }
-        />
-
-        <Route
-          path="/mypost/update"
-          element={
-            <Auth>
-              <CreatePostPage />
-            </Auth>
-          }
-        />
+          <Route
+            path="mypost/update"
+            element={
+              <Auth>
+                <CreatePostPage />
+              </Auth>
+            }
+          />
+        </Route>
       </Routes>
       <ToastContainer />
     </>

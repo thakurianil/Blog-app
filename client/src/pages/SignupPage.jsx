@@ -6,41 +6,36 @@ import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import { CustomInputField } from "../components/CustomInputField";
 import { toast } from "react-toastify";
+import { useForm } from "../hooks/useForm";
 
 const SignupPage = () => {
-  const [email, setEmail] = useState("");
-
-  const [formData, setFormData] = useState({
+  const { formData, handleOnChange } = useForm({
     username: "",
     email: "",
     password: "",
     comfirmPassword: "",
   });
 
-  const handleOnChange = (e) => {
-    // const tempFormData = {
-    //   ...formData
-    // }
+  // const [formData, setFormData] = useState({
+  //   username: "",
+  //   email: "",
+  //   password: "",
+  //   comfirmPassword: "",
+  // });
 
-    // tempFormData[e.target.name] = e.target.value
-    // setFormData(tempFormData);
+  // const handleOnChange = (e) => {
+  //   setFormData({
+  //     ...formData,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
 
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleOnSubmit = async (e) => {
+  const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    console.log(formData);
-
     if (formData.password === formData.comfirmPassword) {
-      await signup(formData);
       // signup axios call
       toast.success("SIGNUP SUCCESS");
-      
     } else {
       toast.error("PASSWORD MISMATCH!!");
     }

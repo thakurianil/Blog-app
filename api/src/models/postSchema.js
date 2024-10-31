@@ -38,8 +38,12 @@ const postSchema = new mongoose.Schema({
 
 export const Post = mongoose.model("post", postSchema);
 
-export const getPosts = async (page, limit) => {
-  return await Post.find().populate("author").limit(limit);
+export const getPosts = async (page = 1, limit = 5) => {
+  return await Post.find()
+    .populate("author")
+    .skip(limit * (page - 1))
+    .limit(limit)
+    .sort({ createdAt: -1 });
 };
 
 export const getPostById = async (id) => {

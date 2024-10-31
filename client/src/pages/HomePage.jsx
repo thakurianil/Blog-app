@@ -65,7 +65,6 @@ const HomePage = () => {
 
   return (
     <>
-      <Header searchPosts={searchPosts} />
       <Container
         fluid
         className="d-flex justify-content-center align-items-center"
@@ -85,7 +84,6 @@ const HomePage = () => {
           </Col>
         </Row>
       </Container>
-      <Footer />
     </>
   );
 };

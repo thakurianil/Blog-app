@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import Header from "../components/Navbar";
-import Footer from "../components/Footer";
+import Footer from "../components/footer";
 import { createPost, fetchPost, updatePost } from "../utils/axiosHelper";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../utils/AuthContext";
+import Editor from "react-simple-wysiwyg";
+import { useForm } from "../hooks/useForm";
 
 const CreatePostPage = () => {
   const { setGlobalMessage } = useAuth();
@@ -25,22 +27,24 @@ const CreatePostPage = () => {
     own: true,
   };
 
-  const [formData, setFormData] = useState({
+  const { formData, setFormData, handleOnChange } = useForm({
     title: "",
     content: "",
     image: "",
   });
 
-  const handleOnChange = (e) => {
-    const tempData = { ...formData };
-    tempData[e.target.name] = e.target.value;
-    setFormData(tempData);
+  // const [formData, setFormData] = useState({
+  //   title: "",
+  //   content: "",
+  //   image: "",
+  // });
 
-    // setFormData({
-    //   ...formData,
-    //   [e.target.name]: e.target.value,
-    // });
-  };
+  // const handleOnChange = (e) => {
+  //   setFormData({
+  //     ...formData,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -55,6 +59,7 @@ const CreatePostPage = () => {
 
     if (response.status == "success") {
       // toast.success(response.message);
+      // using global message context
       setGlobalMessage(response.message);
 
       setTimeout(() => {
@@ -88,7 +93,6 @@ const CreatePostPage = () => {
 
   return (
     <>
-      <Header />
       <Container
         fluid
         className="d-flex justify-content-center"
@@ -111,7 +115,7 @@ const CreatePostPage = () => {
                 />
               </Form.Group>
 
-              <Form.Group controlId="formContent" className="mt-3">
+              {/* <Form.Group controlId="formContent" className="mt-3">
                 <Form.Label>Content</Form.Label>
                 <Form.Control
                   as="textarea"
@@ -122,7 +126,13 @@ const CreatePostPage = () => {
                   value={formData.content}
                   onChange={handleOnChange}
                 />
-              </Form.Group>
+              </Form.Group> */}
+
+              <Editor
+                value={formData.content}
+                onChange={handleOnChange}
+                name="content"
+              />
 
               <Form.Group controlId="formImageUrl" className="mt-3">
                 <Form.Label>Image URL</Form.Label>
@@ -142,7 +152,6 @@ const CreatePostPage = () => {
           </Col>
         </Row>
       </Container>
-      <Footer />
     </>
   );
 };

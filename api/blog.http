@@ -36,6 +36,11 @@ GET {{api_url}}/post
 
 ###
 
+# Get All Post with page 2 limit 10
+GET {{api_url}}/post?page=2&limit=2
+
+###
+
 # Create Post
 POST {{api_url}}/post
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3MGNjNDExOTk4MjUxOWEzODg0OWMiLCJlbWFpbCI6ImphbmVAZ21haWwuY29tIiwiaWF0IjoxNzI5NjQyNzQ4LCJleHAiOjE3Mjk3MjkxNDh9.FwNtqMb6qJ2OqWIec8tn-yvA1mujPulw1wAK6UAW0lw

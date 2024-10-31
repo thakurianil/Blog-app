@@ -40,6 +40,7 @@ export const CommentComponent = ({ postid, comments }) => {
               placeholder="Leave a comment here"
               value={comment}
               onChange={handleOnChange}
+              required
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicName">

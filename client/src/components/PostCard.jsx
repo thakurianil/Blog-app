@@ -7,9 +7,12 @@ import {
   faPenToSquare,
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "../utils/AuthContext";
 
 const PostCard = ({ post, likeFunction, deleteFunction }) => {
   const navigate = useNavigate();
+  const { userid } = useAuth();
+
   const updateFunction = (id) => {
     navigate("/mypost/update?id=" + id);
   };
@@ -27,19 +30,28 @@ const PostCard = ({ post, likeFunction, deleteFunction }) => {
             <Link
               to={"/article?id=" + post._id}
               className=""
-              style={{ textDecoration: "none", color: "inherit" }}
+              style={{
+                maxWidth: "200px",
+                textDecoration: "none",
+                color: "inherit",
+              }}
             >
-              {post.title}
+              {post.title.slice(0, 30)} ...
             </Link>
-            <div>
-              <FontAwesomeIcon
-                icon={faHeart}
-                size="sm"
-                style={{ cursor: "pointer", color: "red" }}
-                title="Like Article"
-                onClick={() => likeFunction(post._id)} // Example action
-              />
-              {post.likes.length}
+            <div className="edit-btns">
+              <div className="like-counter">
+                <FontAwesomeIcon
+                  icon={faHeart}
+                  size="sm"
+                  style={{
+                    cursor: "pointer",
+                    color: post.likes.includes(userid) ? "red" : "grey",
+                  }}
+                  title="Like Article"
+                  onClick={() => likeFunction(post._id)} // Example action
+                />
+                {post.likes.length}
+              </div>
 
               {post.owner ? (
                 <>
@@ -64,7 +76,9 @@ const PostCard = ({ post, likeFunction, deleteFunction }) => {
             </div>
           </Card.Title>
           <hr />
-          <Card.Text>{post.content.slice(0, 100)}...</Card.Text>
+          <Card.Text>
+            {post.content.replace(/<[^>]+>/g, "").slice(0, 100)}...
+          </Card.Text>
           <strong className="author-info">- {post.author?.username}</strong>
         </Card.Body>
       </Card>

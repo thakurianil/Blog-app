@@ -35,7 +35,6 @@ const PostPage = () => {
 
   return (
     <>
-      <Header />
       <Container className="mt-5">
         {/* Article Image with height restriction */}
         <Row>
@@ -55,7 +54,10 @@ const PostPage = () => {
           <Col md={{ span: 8, offset: 2 }}>
             <h1 className="mb-3">{post.title}</h1>
             <hr />
-            <p>{post.content}</p>
+            <p>
+              {" "}
+              <div dangerouslySetInnerHTML={{ __html: post.content }} />
+            </p>
             <div className="author-info mt-4">
               <p>
                 <strong>Written by:</strong> {post.author?.username}
@@ -75,8 +77,6 @@ const PostPage = () => {
           </Col>
         </Row>
       </Container>
-
-      <Footer />
     </>
   );
 };

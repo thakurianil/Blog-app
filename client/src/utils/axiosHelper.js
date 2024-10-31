@@ -4,6 +4,19 @@ const postEP = rootAPI + "/post";
 const authEP = rootAPI + "/auth";
 const userEP = rootAPI + "/user";
 
+export const getJWTtoken = () => {
+  const token = localStorage.getItem("accessJWT");
+  return token;
+};
+
+export const setJWTtoken = (token) => {
+  localStorage.setItem("accessJWT", token);
+};
+
+export const removeJWTtoken = () => {
+  localStorage.removeItem("accessJWT"); // Clear the token on logout
+};
+
 export const userLogin = async (loginInfo) => {
   const obj = {
     method: "post",
@@ -32,7 +45,7 @@ const apiProcessor = async ({ method, url, data, headers }) => {
 };
 
 export const fetchPosts = async () => {
-  const obj = { method: "get", url: postEP };
+  const obj = { method: "get", url: postEP + "?page=1&limit=10" };
   return await apiProcessor(obj);
 };
 
@@ -45,7 +58,7 @@ export const fetchPost = async (postId) => {
 };
 
 export const fetchMyPost = async () => {
-  let token = localStorage.getItem("jwtToken");
+  let token = getJWTtoken();
 
   const obj = {
     method: "get",
@@ -59,7 +72,7 @@ export const fetchMyPost = async () => {
 };
 
 export const createPost = async (postData) => {
-  let token = localStorage.getItem("jwtToken");
+  let token = getJWTtoken();
   const obj = {
     method: "post",
     url: postEP,
@@ -73,7 +86,7 @@ export const createPost = async (postData) => {
 };
 
 export const updatePost = async (id, postData) => {
-  let token = localStorage.getItem("jwtToken");
+  let token = getJWTtoken();
   const obj = {
     method: "patch",
     url: postEP + "/" + id,
@@ -87,7 +100,7 @@ export const updatePost = async (id, postData) => {
 };
 
 export const likePost = async (id) => {
-  let token = localStorage.getItem("jwtToken");
+  let token = getJWTtoken();
   const obj = {
     method: "patch",
     url: postEP + "/like/" + id,
@@ -100,7 +113,7 @@ export const likePost = async (id) => {
 };
 
 export const deletePost = async (id) => {
-  const token = localStorage.getItem("jwtToken");
+  let token = getJWTtoken();
 
   const obj = {
     method: "delete",
@@ -114,7 +127,7 @@ export const deletePost = async (id) => {
 };
 
 export const verifyToken = async () => {
-  const token = localStorage.getItem("jwtToken");
+  let token = getJWTtoken();
 
   const obj = {
     method: "get",
@@ -137,7 +150,7 @@ export const fetchSearchPost = async (query) => {
 };
 
 export const postComment = async (id, commentObj) => {
-  const token = localStorage.getItem("jwtToken");
+  let token = getJWTtoken();
 
   const obj = {
     method: "post",

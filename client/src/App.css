@@ -76,7 +76,27 @@ p.card-text {
   flex-direction: column;
 }
 
-@media screen and (max-width: 800px) {
+.edit-btns {
+  width: 70px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.like-counter {
+  width: 30px;
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+@media screen and (width < 1100px) {
+  .post {
+    width: 45%;
+  }
+}
+
+@media screen and (width < 800px) {
   .post {
     width: 100%;
   }

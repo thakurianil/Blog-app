@@ -2,7 +2,6 @@ import React from "react";
 import { Image } from "react-bootstrap";
 
 export const UserComments = ({ comments }) => {
-    console.log(comments)
   return (
     <div>
       {comments.map((comment) => {
@@ -17,7 +16,7 @@ export const UserComments = ({ comments }) => {
             <div className="inner-comment">
               {comment.comment}
               <span className="comment-user">
-                By: {comment.userid?.username}
+                By: {comment.userid.username}
               </span>
             </div>
           </div>

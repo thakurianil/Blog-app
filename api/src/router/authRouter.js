@@ -100,7 +100,7 @@ router.get("/verify", consoleMiddleWare, authenticateJWT, async (req, res) => {
   const respObj = {
     status: "success",
     message: "Verified",
-    data: { username: req.user.username },
+    data: { username: req.user.username, _id: req.user._id },
   };
 
   return res.status(200).send(respObj);

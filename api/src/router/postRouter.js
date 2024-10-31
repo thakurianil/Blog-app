@@ -14,8 +14,8 @@ const router = express.Router();
 // get all posts
 router.get("/", async (req, res) => {
   try {
-    let page = req.params.page || 1;
-    let limit = req.params.limit || 10;
+    let page = req.query.page || 1;
+    let limit = req.query.limit || 10;
     let data = await getPosts(page, limit);
 
     let postData = [...data];

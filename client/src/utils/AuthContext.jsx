@@ -1,6 +1,11 @@
 // src/utils/AuthContext.js
 import React, { createContext, useContext, useState } from "react";
-import { userLogin, verifyToken } from "./axiosHelper";
+import {
+  removeJWTtoken,
+  setJWTtoken,
+  userLogin,
+  verifyToken,
+} from "./axiosHelper";
 
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
@@ -8,15 +13,14 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [globalMessage, setGlobalMessage] = useState("");
   const [user, setUser] = useState(null);
+  const [userid, setUserId] = useState(null);
 
   const autoLogin = async () => {
-    console.log("auto login");
-
     // call verify endpoint
     const response = await verifyToken();
-    console.log(100, response);
     if (response.status == "success") {
       setUser(response.data.username);
+      setUserId(response.data._id);
     }
   };
 
@@ -24,7 +28,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await userLogin(loginInfo);
       const { token, username } = response.data;
-      localStorage.setItem("jwtToken", token);
+
+      setJWTtoken(token);
       setUser(username);
     } catch (error) {
       throw new Error("Login failed. Please check your credentials.");
@@ -32,7 +37,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem("jwtToken"); // Clear the token on logout
+    removeJWTtoken(); // Clear the token on logout
     setUser(null);
   };
 
@@ -40,6 +45,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
+        userid,
         login,
         logout,
         autoLogin,
