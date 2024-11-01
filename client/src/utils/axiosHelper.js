@@ -71,6 +71,17 @@ export const fetchMyPost = async () => {
   return await apiProcessor(obj);
 };
 
+export const signup = async (formData) => {
+
+  const obj = {
+    method: "post",
+    url: authEP + "/signup",
+    data: formData,
+  };
+
+  return await apiProcessor(obj);
+}
+
 export const createPost = async (postData) => {
   let token = getJWTtoken();
   const obj = {

@@ -3,12 +3,15 @@ import { Col, Container, Image, Row } from "react-bootstrap";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CustomInputField } from "../components/CustomInputField";
 import { toast } from "react-toastify";
 import { useForm } from "../hooks/useForm";
+import { signup } from "../utils/axiosHelper";
+
 
 const SignupPage = () => {
+  const navigate = useNavigate();
   const { formData, handleOnChange } = useForm({
     username: "",
     email: "",
@@ -30,11 +33,14 @@ const SignupPage = () => {
   //   });
   // };
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
 
     if (formData.password === formData.comfirmPassword) {
-      // signup axios call
+     
+        await signup(formData);
+    
+        navigate("/");
       toast.success("SIGNUP SUCCESS");
     } else {
       toast.error("PASSWORD MISMATCH!!");
