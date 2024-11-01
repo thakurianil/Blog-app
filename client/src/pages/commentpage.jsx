@@ -24,7 +24,7 @@ const CommentPage = ({ postid, comments,}) => {
     e.preventDefault();
 
     const response = await postComment(postid, formData);
-    navigate("/");
+    getPost(postid);
     
   };
 
