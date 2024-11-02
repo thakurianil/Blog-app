@@ -1,11 +1,11 @@
 /* Root color variables for theme management */
 :root {
-  --primary-color: #4a90e2; /* Soft blue for buttons and highlights */
-  --secondary-color: #f7f9fc; /* Light gray-blue for backgrounds */
-  --accent-color: #1e73be; /* Deeper blue accent */
-  --text-color: #2c3e50; /* Darker gray for main text */
-  --muted-text-color: #5d6d7e; /* Softer gray for secondary text */
-  --border-color: #dce1e8; /* Light border color */
+  --primary-color: #ff6b35; /* Orange for primary elements like buttons */
+  --secondary-color: #f0f0f0; /* Light gray for backgrounds */
+  --accent-color: #4caf50; /* Green for accents */
+  --text-color: #333333; /* Dark gray for main text */
+  --muted-text-color: #555555; /* Medium gray for secondary text */
+  --border-color: #e0e0e0; /* Light border color */
   --hover-scale: 1.02;
   --font-main: 'Arial', sans-serif;
   --background-color: #ffffff; /* White background for sections */
@@ -68,7 +68,7 @@ footer.footer {
   height: 60px;
   font-size: 25px;
   color: #fff;
-  background-color: var(--accent-color); /* Deep blue button */
+  background-color: var(--accent-color); /* Green button */
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -99,12 +99,12 @@ p.card-text {
 
 .comment {
   min-height: 50px;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 20px;
+  border-radius: 15px;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
   background-color: var(--background-color); /* Comment background */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -142,15 +142,18 @@ p.card-text {
   gap: 0.2rem;
   align-items: center;
 }
+
+/* Fixed footer */
 .footer {
-  position: fixed;
-  bottom: 0;
+  position: static;
+  bottom: 10;
   left: 0;
   right: 0;
-  background-color: #343a40; /* Adjust as necessary */
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-color); /* Orange background */
   color: white; /* Adjust text color as needed */
 }
-
 
 /* Responsive Design */
 @media (max-width: 1100px) {

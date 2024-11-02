@@ -22,7 +22,7 @@ const PostPage = () => {
 
   const getPost = async (postid) => {
     const response = await fetchPost(postid);
-    if (response.status == "error") {
+    if (response.status === "error") {
       setPost({});
     } else {
       setPost(response.data);
@@ -35,7 +35,14 @@ const PostPage = () => {
 
   return (
     <>
-      <Container className="mt-5">
+      <Container
+        className="mt-4"
+        style={{
+         
+          padding: "20px",
+          borderRadius: "8px",
+        }}
+      >
         {/* Article Image with height restriction */}
         <Row>
           <Col>
@@ -50,32 +57,41 @@ const PostPage = () => {
         </Row>
 
         {/* Title, Content, and Author Section */}
-        <Row>
-          <Col md={{ span: 8, offset: 2 }}>
-            <h1 className="mb-3">{post.title}</h1>
-            <hr />
-            <p>
-              {" "}
-              <div dangerouslySetInnerHTML={{ __html: post.content }} />
-            </p>
-            <div className="author-info mt-4">
+        <div
+          style={{
+            border: "2px solid #ddd",
+            padding: "20px",
+            borderRadius: "8px",
+            boxShadow: "6px 6px 15px rgba(0, 0, 0, 0.2)"
+          }}
+        >
+          <Row>
+            <Col md={{ span: 8, offset: 2 }}>
+              <h1 className="mb-3">{post.title}</h1>
+              <hr />
               <p>
-                <strong>Written by:</strong> {post.author?.username}
+                <div dangerouslySetInnerHTML={{ __html: post.content }}
+                 style={{ backgroundColor: "white", padding: "10px", borderRadius: "8px" }} />
               </p>
-              <p>
-                <small>{post.date}</small>
-              </p>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={{ span: 8, offset: 2 }}>
-            <CommentComponent
-              postid={post._id}
-              comments={post.comments ?? []}
-            />
-          </Col>
-        </Row>
+              <div className="author-info mt-4">
+                <p>
+                  <strong>Written by:</strong> {post.author?.username}
+                </p>
+                <p>
+                  <small>{post.date}</small>
+                </p>
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={{ span: 8, offset: 2 }}>
+              <CommentComponent
+                postid={post._id}
+                comments={post.comments ?? []}
+              />
+            </Col>
+          </Row>
+        </div>
       </Container>
     </>
   );

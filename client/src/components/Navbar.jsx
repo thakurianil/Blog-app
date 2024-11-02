@@ -15,16 +15,18 @@ const Header = ({ searchPosts }) => {
   };
 
   const handleOnSubmit = (e) => {
-    // console.log("SEARCH");
     e.preventDefault();
-    // searchPosts(searchValue);
-
     navigate("/search?query=" + searchValue);
   };
 
   return (
     <>
-      <Navbar className="bg-body-tertiary">
+      <Navbar className="bg-body-tertiary sticky-top" style={{
+            border: "2px solid #ddd",
+            padding: "20px",
+            borderRadius: "8px",
+            boxShadow: "6px 6px 15px rgba(0, 0, 0, 0.2)"
+       }}>
         <Container>
           <Navbar.Brand href="/">
             <img

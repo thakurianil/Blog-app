@@ -6,6 +6,7 @@ import { fetchPost, postComment } from "../utils/axiosHelper";
 import { Await } from "react-router";
 import { useEffect } from "react";
 import UserComments from "../components/UserComments";
+import { getPostById } from "../../../api/src/models/postSchema";
 const CommentPage = ({ postid, comments,}) => {
   const navigate = useNavigator();
     const [formData, setFormData] = useState({
@@ -24,7 +25,7 @@ const CommentPage = ({ postid, comments,}) => {
     e.preventDefault();
 
     const response = await postComment(postid, formData);
-    getPost(postid);
+    getPostById(postid);
     
   };
 
@@ -43,7 +44,7 @@ const CommentPage = ({ postid, comments,}) => {
             onChange={handleOnChange}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button className="mb-3 " variant="primary" type="submit">
           Add Comment
         </Button>
       </Form>
