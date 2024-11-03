@@ -6,7 +6,7 @@ import { fetchPost, postComment } from "../utils/axiosHelper";
 import { Await } from "react-router";
 import { useEffect } from "react";
 import UserComments from "../components/UserComments";
-import { getPostById } from "../../../api/src/models/postSchema";
+
 const CommentPage = ({ postid, comments}) => {
   const navigate = useNavigator();
     const [formData, setFormData] = useState({

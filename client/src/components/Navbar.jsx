@@ -54,11 +54,11 @@ const Header = ({ searchPosts }) => {
             </Nav>
           </Navbar.Collapse>
 
-          <Form className="d-flex g-2" onSubmit={handleOnSubmit}>
+          <Form className="d-flex g-3" onSubmit={handleOnSubmit}>
             <Form.Control
               type="search"
               placeholder="Search"
-              className="me-2"
+              className="me-3"
               aria-label="Search"
               value={searchValue}
               onChange={handleOnChange}
