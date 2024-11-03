@@ -99,6 +99,8 @@ p.card-text {
 
 .comment {
   min-height: 50px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   padding: 20px;
   border-radius: 15px;
   border-bottom: 1px solid var(--border-color);

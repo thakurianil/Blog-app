@@ -51,7 +51,7 @@ const PostPage = () => {
               alt="Article"
               fluid
               className="mb-4 rounded"
-              style={{ maxHeight: "300px", width: "100%", objectFit: "cover" }}
+              style={{ maxHeight: "300px", width: "100%", objectFit: "cover" ,  filter: "drop-shadow(8px 8px 10px gray)",}}
             />
           </Col>
         </Row>

@@ -7,7 +7,7 @@ import { Await } from "react-router";
 import { useEffect } from "react";
 import UserComments from "../components/UserComments";
 import { getPostById } from "../../../api/src/models/postSchema";
-const CommentPage = ({ postid, comments,}) => {
+const CommentPage = ({ postid, comments}) => {
   const navigate = useNavigator();
     const [formData, setFormData] = useState({
     comment: "",
@@ -25,7 +25,6 @@ const CommentPage = ({ postid, comments,}) => {
     e.preventDefault();
 
     const response = await postComment(postid, formData);
-    getPostById(postid);
     
   };
 
