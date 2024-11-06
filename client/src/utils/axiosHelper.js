@@ -123,7 +123,19 @@ export const likePost = async (id) => {
   return await apiProcessor(obj);
 };
 
+export const deletePost = async (id) => {
+  let token = getJWTtoken();
 
+  const obj = {
+    method: "delete",
+    url: postEP + "/" + id,
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+
+  return await apiProcessor(obj);
+};
 
 export const verifyToken = async () => {
   let token = getJWTtoken();
