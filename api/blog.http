@@ -14,8 +14,8 @@ Content-Type: application/json
 
 {
   "username":"user1",
-  "email" : "test@email.com",
-  "password": "password"
+  "email" : "anil@email.com",
+  "password": "123"
 }
 
 ###
@@ -25,8 +25,8 @@ POST {{api_url}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "jane@gmail.com",
-  "password" : "password"
+  "email": "anil@email.com",
+  "password" : "123"
 }
 
 ###
@@ -43,7 +43,7 @@ GET {{api_url}}/post?page=2&limit=2
 
 # Create Post
 POST {{api_url}}/post
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3MGNjNDExOTk4MjUxOWEzODg0OWMiLCJlbWFpbCI6ImphbmVAZ21haWwuY29tIiwiaWF0IjoxNzI5NjQyNzQ4LCJleHAiOjE3Mjk3MjkxNDh9.FwNtqMb6qJ2OqWIec8tn-yvA1mujPulw1wAK6UAW0lw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzMyYmE1N2YxMDhlZjNmNTJlNWFjNjMiLCJlbWFpbCI6ImFuaWxAZW1haWwuY29tIiwidXNlcm5hbWUiOiJ1c2VyMSIsImlhdCI6MTczMTM3Nzc4MiwiZXhwIjoxNzMxNDY0MTgyfQ.sA5kFpPq6Gaoy2Ge-arBrQqnwfmJyXLPRpUrcURBYLk
 Content-Type: application/json
 
 {
